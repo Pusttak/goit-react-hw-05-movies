@@ -1,0 +1,33 @@
+.form {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+}
+
+.input {
+  width: 300px;
+  height: 30px;
+  margin-right: 5px;
+  border: 2px solid #072929f7;
+  border-radius: 4px;
+}
+
+.button {
+  width: 100px;
+  height: 35px;
+  border: none;
+  background-color: #072929dc;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.wrapButton {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  margin: 25px 0;
+}

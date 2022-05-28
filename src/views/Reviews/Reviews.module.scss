@@ -1,0 +1,52 @@
+.list {
+  margin: 10px;
+}
+
+.itemList {
+  position: relative;
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: rgb(239, 239, 239);
+  border-radius: 8px;
+}
+
+.date {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: rgb(129, 129, 129);
+}
+
+.wrapRating {
+  display: flex;
+  align-items: baseline;
+}
+
+.name {
+  margin-bottom: 10px;
+  color: rgb(50, 50, 50);
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  margin-left: 25px;
+  font-size: 21px;
+  font-weight: 500;
+  color: #b85d20;
+}
+
+.icon {
+  margin-left: 5px;
+  width: 21px;
+  height: 21px;
+}
+
+.content {
+  font-size: 14px;
+  color: rgb(54, 54, 54);
+}
