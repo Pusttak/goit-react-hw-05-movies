@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { fetchTrendingMovies } from 'services/API';
 import CardsOfMovies from 'components/CardsOfMovies';
 import CardOfMovie from 'components/CardOfMovie';
@@ -8,21 +8,20 @@ import s from './HomeView.module.scss';
 
 const HomeView = () => {
   const [movies, setMovies] = useState([]);
-  const location = useLocation();
-  const navigate = useNavigate();
-  let page = new URLSearchParams(location.search).get('page') || 1;
+  const [searchParams, setSearchParams] = useSearchParams();
+  let currentPage = Number(searchParams.get('page')) || 1;
 
   useEffect(() => {
-    fetchTrendingMovies(page).then(({ results }) => setMovies(results));
-  }, [page]);
+    fetchTrendingMovies(currentPage).then(({ results }) => setMovies(results));
+  }, [currentPage]);
 
   const changePage = evt => {
     switch (evt.currentTarget.name) {
       case 'increment':
-        navigate({ search: `page=${Number(page) + 1}` });
+        setSearchParams({ page: currentPage + 1 });
         break;
       case 'decrement':
-        navigate({ search: `page=${Number(page) - 1 || 1}` });
+        setSearchParams({ page: currentPage - 1 || 1 });
         break;
 
       default:

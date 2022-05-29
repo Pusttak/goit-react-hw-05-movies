@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { fetchMoviesByQuery } from 'services/API';
 import CardsOfMovies from 'components/CardsOfMovies';
 import CardOfMovie from 'components/CardOfMovie';
@@ -8,10 +8,10 @@ import s from './MoviesView.module.scss';
 
 const MoviesView = () => {
   const [movies, setMovies] = useState(null);
-  const navigate = useNavigate();
-  const location = useLocation();
-  const query = new URLSearchParams(location.search).get('query');
-  let page = new URLSearchParams(location.search).get('page') || 1;
+  const [searchParams, setSearchParams] = useSearchParams();
+  const query = searchParams.get('query') || '';
+  let page = Number(searchParams.get('page')) || 1;
+  const params = { query, page };
 
   useEffect(() => {
     if (query) {
@@ -23,20 +23,18 @@ const MoviesView = () => {
     evt.preventDefault();
     const form = evt.currentTarget;
     if (form.search.value) {
-      navigate({
-        search: `query=${form.search.value}`,
-      });
+      setSearchParams({ ...params, query: form.search.value });
       form.reset();
     }
   };
 
   const changePage = evt => {
-    switch (evt.currentTarget.name) {
+    switch (evt.target.name) {
       case 'increment':
-        navigate({ search: `query=${query}&page=${Number(page) + 1}` });
+        setSearchParams({ ...params, page: page + 1 });
         break;
       case 'decrement':
-        navigate({ search: `query=${query}&page=${Number(page) - 1 || 1}` });
+        setSearchParams({ ...params, page: page - 1 || 1 });
         break;
 
       default:

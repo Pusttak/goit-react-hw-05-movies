@@ -18,24 +18,16 @@ const Cast = lazy(() => import('views/Cast' /* webpackChunkName: "Cast" */));
 
 const MovieDetailsView = () => {
   const [movie, setMovie] = useState(null);
-  const [genres, setGenres] = useState(null);
   const { movieId } = useParams();
   const location = useLocation();
-  const history = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchMoviesByID(movieId).then(setMovie);
   }, [movieId]);
 
-  useEffect(() => {
-    if (movie) {
-      const genres = movie.genres.map(genre => genre.name);
-      setGenres(genres.join(', '));
-    }
-  }, [movie]);
-
   const onGoBack = () => {
-    history(location?.state?.from || '/');
+    navigate(location?.state?.from || '/');
   };
 
   return (
@@ -58,7 +50,9 @@ const MovieDetailsView = () => {
           <div className={s.wrapText}>
             <span className={s.title}>{movie.title}</span>
             <div className={s.wrapRating}>
-              <span className={s.genre}>{genres}</span>
+              <span className={s.genre}>
+                {movie.genres.map(({ name }) => name).join(', ')}
+              </span>
               <span className={s.rating}>
                 <FaStar className={s.icon} />
                 {movie.vote_average}
