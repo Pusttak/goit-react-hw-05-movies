@@ -9,19 +9,19 @@ import s from './HomeView.module.scss';
 const HomeView = () => {
   const [movies, setMovies] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
-  let currentPage = Number(searchParams.get('page')) || 1;
+  let page = Number(searchParams.get('page')) || 1;
 
   useEffect(() => {
-    fetchTrendingMovies(currentPage).then(({ results }) => setMovies(results));
-  }, [currentPage]);
+    fetchTrendingMovies(page).then(({ results }) => setMovies(results));
+  }, [page]);
 
   const changePage = evt => {
     switch (evt.currentTarget.name) {
       case 'increment':
-        setSearchParams({ page: currentPage + 1 });
+        setSearchParams({ page: page + 1 });
         break;
       case 'decrement':
-        setSearchParams({ page: currentPage - 1 || 1 });
+        setSearchParams({ page: page - 1 || 1 });
         break;
 
       default:

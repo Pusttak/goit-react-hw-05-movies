@@ -2,6 +2,7 @@ import { Route, Routes, Navigate } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import Container from 'components/Container';
 import AppBar from 'components/AppBar';
+
 const HomeView = lazy(() =>
   import('./views/HomeView' /* webpackChunkName: "HomeView" */)
 );
