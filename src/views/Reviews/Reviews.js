@@ -1,19 +1,20 @@
 import { useState, useEffect } from 'react';
+import { useOutletContext } from 'react-router-dom';
 import { FaStar } from 'react-icons/fa';
-import PropTypes from 'prop-types';
 import { fetchReviews } from 'services/API';
 import s from './Reviews.module.scss';
 
-const Reviews = ({ movieId }) => {
-  const [reviews, setReviews] = useState(null);
+const Reviews = () => {
+  const [reviews, setReviews] = useState([]);
+  const movieId = useOutletContext();
 
   useEffect(() => {
     fetchReviews(movieId).then(reviews => setReviews(reviews.results));
   }, [movieId]);
 
-  return reviews?.length ? (
+  return reviews.length > 0 ? (
     <ul className={s.list}>
-      {reviews?.map(
+      {reviews.map(
         ({ id, content, created_at, author_details: { username, rating } }) => {
           return (
             <li className={s.itemList} key={id}>
@@ -34,14 +35,10 @@ const Reviews = ({ movieId }) => {
       )}
     </ul>
   ) : (
-    <div style={{ fontSize: '18px', textAlign: 'center' }}>
-      There are yet no reviews for this movie.
-    </div>
+    <>
+      <div className={s.text}>There are yet no reviews for this movie.</div>
+    </>
   );
 };
 
 export default Reviews;
-
-Reviews.propTypes = {
-  movieId: PropTypes.string.isRequired,
-};

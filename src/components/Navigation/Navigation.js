@@ -19,7 +19,7 @@ const Navigation = () => (
 
     <li className={s.listItem}>
       <NavLink
-        to="/movies/"
+        to="/movies"
         className={({ isActive }) =>
           isActive ? `${s.activeLink}` : `${s.link}`
         }

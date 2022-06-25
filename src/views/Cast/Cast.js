@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import { useOutletContext } from 'react-router-dom';
 import { fetchCredits } from 'services/API';
 import s from './Cast.module.scss';
 
-const Cast = ({ movieId }) => {
+const Cast = () => {
   const [actors, setActors] = useState(null);
+  const movieId = useOutletContext();
 
   useEffect(() => {
     fetchCredits(movieId).then(({ cast }) => setActors(cast));
@@ -36,7 +37,3 @@ const Cast = ({ movieId }) => {
 };
 
 export default Cast;
-
-Cast.propTypes = {
-  movieId: PropTypes.string.isRequired,
-};

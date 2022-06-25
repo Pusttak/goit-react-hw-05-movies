@@ -1,8 +1,7 @@
-import { useState, useEffect, Suspense, lazy } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import {
   NavLink,
-  Route,
-  Routes,
+  Outlet,
   useLocation,
   useParams,
   useNavigate,
@@ -10,11 +9,8 @@ import {
 import { FaStar } from 'react-icons/fa';
 import { IoCaretBackOutline } from 'react-icons/io5';
 import { fetchMoviesByID } from 'services/API';
+import Loader from 'components/Loader';
 import s from './MovieDetailsView.module.scss';
-const Reviews = lazy(() =>
-  import('views/Reviews' /* webpackChunkName: "Reviews" */)
-);
-const Cast = lazy(() => import('views/Cast' /* webpackChunkName: "Cast" */));
 
 const MovieDetailsView = () => {
   const [movie, setMovie] = useState(null);
@@ -87,27 +83,9 @@ const MovieDetailsView = () => {
               </NavLink>
             </li>
           </ul>
-
-          {
-            <Suspense
-              fallback={
-                <p
-                  style={{
-                    textAlign: 'center',
-                    marginTop: '25px',
-                    fontWeight: '700',
-                  }}
-                >
-                  Loading...
-                </p>
-              }
-            >
-              <Routes>
-                <Route path="cast" element={<Cast movieId={movieId} />} />
-                <Route path="reviews" element={<Reviews movieId={movieId} />} />
-              </Routes>
-            </Suspense>
-          }
+          <Suspense fallback={<Loader />}>
+            <Outlet context={movieId} />
+          </Suspense>
         </div>
       </>
     )
